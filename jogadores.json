@@ -1,6 +1,57 @@
 [
   {
-    "nome": "Jogador 1",
-    "time": "Time A"
+    "nome": "Cássio",
+    "posicao": "Goleiro",
+    "numero": 12
+  },
+  {
+    "nome": "Fagner",
+    "posicao": "Lateral-direito",
+    "numero": 23
+  },
+  {
+    "nome": "Gil",
+    "posicao": "Zagueiro",
+    "numero": 3
+  },
+  {
+    "nome": "Caetano",
+    "posicao": "Zagueiro",
+    "numero": 15
+  },
+  {
+    "nome": "Matheuzinho",
+    "posicao": "Lateral-esquerdo",
+    "numero": 26
+  },
+  {
+    "nome": "Raniele",
+    "posicao": "Volante",
+    "numero": 5
+  },
+  {
+    "nome": "Roni",
+    "posicao": "Meio-campista",
+    "numero": 8
+  },
+  {
+    "nome": "Maycon",
+    "posicao": "Meio-campista",
+    "numero": 10
+  },
+  {
+    "nome": "Renato Augusto",
+    "posicao": "Meio-campista",
+    "numero": 8
+  },
+  {
+    "nome": "Yuri Alberto",
+    "posicao": "Atacante",
+    "numero": 9
+  },
+  {
+    "nome": "Róger Guedes",
+    "posicao": "Atacante",
+    "numero": 7
   }
 ]
