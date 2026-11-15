@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Corinthians - Jogadores</title>
+    <style>
+      :root {
+        --corinthians-preto: #0d0d0d;
+        --corinthians-branco: #f5f5f5;
+        --corinthians-papel: #f0f0f0;
+        --corinthians-pink: #d81b60;
+        --corinthians-azul: #1d4ed8;
+        --corinthians-verde: #0f766e;
+        --sombra: rgba(0, 0, 0, 0.15);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(135deg, #f2f2f2, #dfe7ef);
+        color: var(--corinthians-preto);
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 40px 20px 80px;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+      }
+
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        font-size: 1.4rem;
+      }
+
+      .badge {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, var(--corinthians-preto), #333);
+        color: var(--corinthians-branco);
+        font-weight: 700;
+        box-shadow: 0 10px 20px var(--sombra);
+      }
+
+      .subtitle {
+        font-size: 0.95rem;
+        opacity: 0.8;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 0 12px 24px var(--sombra);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 30px var(--sombra);
+      }
+
+      .numero {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--corinthians-preto);
+        color: var(--corinthians-branco);
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .nome {
+        margin: 0 0 12px;
+        font-size: 1.2rem;
+      }
+
+      .info {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-size: 0.92rem;
+        color: #333;
+      }
+
+      .tag {
+        display: inline-block;
+        padding: 8px 10px;
+        border-radius: 999px;
+        background: #dbeafe;
+        color: #1e3a8a;
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+
+      .loading,
+      .error {
+        text-align: center;
+        background: white;
+        border-radius: 16px;
+        padding: 22px;
+        box-shadow: 0 10px 24px var(--sombra);
+      }
+
+      .error {
+        color: #991b1b;
+        background: #fee2e2;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="logo">
+          <div class="badge">CC</div>
+          <div>
+            <div>Corinthians</div>
+            <div class="subtitle">Elenco</div>
+          </div>
+        </div>
+      </header>
+
+      <div id="status" class="loading">Carregando jogadores...</div>
+      <div id="cards" class="cards"></div>
+    </div>
+
+    <script>
+      const cardsContainer = document.getElementById('cards');
+      const status = document.getElementById('status');
+
+      async function carregarJogadores() {
+        try {
+          const resposta = await fetch('jogadores.json');
+
+          if (!resposta.ok) {
+            throw new Error('Falha ao carregar o arquivo JSON');
+          }
+
+          const jogadores = await resposta.json();
+
+          if (!Array.isArray(jogadores) || jogadores.length === 0) {
+            throw new Error('Nenhum jogador encontrado');
+          }
+
+          status.style.display = 'none';
+
+          jogadores.forEach((jogador) => {
+            const card = document.createElement('article');
+            card.className = 'card';
+
+            card.innerHTML = `
+              <div class="numero">${jogador.numero || '--'}</div>
+              <h2 class="nome">${jogador.nome || 'Sem nome'}</h2>
+              <div class="info">
+                <span class="tag">${jogador.posicao || 'Posição'}</span>
+              </div>
+            `;
+
+            cardsContainer.appendChild(card);
+          });
+        } catch (erro) {
+          status.className = 'error';
+          status.textContent = 'Não foi possível carregar os jogadores. Verifique o arquivo jogadores.json.';
+          console.error(erro);
+        }
+      }
+
+      carregarJogadores();
+    </script>
+  </body>
+</html>
